@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main</title><!DOCTYPE html>
+    
+</head>
+<body>
+    <div id="cover">
+        <br><br>
+        <div style="padding-left: 20px; font-weight: 900; font-size: 5em;"><br>사물함을 <br>선택해 주세요</div>
+        <h3 style="padding-left: 20px; font-weight: 100; font-size: 2em">사용할 사물함을 선택해 주세요!</h3>
+        <div class="center">
+            <table>
+                <tr>
+                  <th></th>
+                  <th>A</th>
+                  <th>B</th>
+                </tr>
+                <tr>
+                  <td>1</td>
+                  <td>
+                    사물함 1
+                    <br>
+                    <button onclick="location.href='/passwd?usertype={{data}}'" style="width: 50px; height: 20px; color: #000; border-color:#70b988; background-color: #fff; border: 1px solid #70b988 ">사용하기</button>
+                  </td>
+                  <td style="color: red">사용 불가</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td style="color: red">사용 불가</td>
+                  <td style="color: red">사용 불가</td>
+                </tr>
+            </table>
+        </div>
+    </div> 
+</form>
+</body>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: #fff;
+}
+
+body{
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Nato Sans KR', sans-serif;
+
+    background-color: #fff;
+}
+
+
+
+#cover{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    height: 1024px;
+    width: 600px;
+    
+    border: 10px solid transparent; /*2*/
+    background: linear-gradient(45deg,#70b988, #70b787) border-box; /*3*/
+}
+
+.center{
+    position: absolute;
+    top: 65%;
+    left: 50%;
+    width: 100%;
+
+    transform: translate(-40%, -50%);
+}
+
+
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: center;
+  padding: 8px;
+  width: 150px;
+  height: 150px;
+
+}
+</style>
+</html>

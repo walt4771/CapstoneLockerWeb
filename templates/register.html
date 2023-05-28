@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main</title><!DOCTYPE html>
+    
+</head>
+<body>
+    <div id="cover">
+      <br><br>
+      <div style="padding-left: 20px; font-weight: 900; font-size: 5em;"><br>판매하고자 하는 <br>책을 넣어주세요</div>
+      <h3 style="padding-left: 20px; font-weight: 100; font-size: 2em">책을 넣고 문을 닫은 후 확인 버튼을 눌러주세요</h3>
+      <div class="center">
+
+        <div class="button" onclick="getUsonic()" style="text-align: center; font-weight: 500; font-size: 2em">
+            책을 넣었어요!
+        </div>
+          <br>
+        <div class="button_no" onclick="location.href='/'" style="text-align: center; font-weight: 500; font-size: 2em">
+            취소할래요
+        </div>
+      </div>
+    </div> 
+</form>
+</body>
+
+<script>
+  fetch('/sensor_opendoor');
+  
+  fetch('/sensor_lighton');
+  
+  async function getUsonic(){
+    const response = await fetch('/sensor_usonic');
+    const resp     = await response.json();
+    
+    
+    if(resp){ // book is in
+        console.log(resp);
+        fetch('/sensor_lightoff');
+        window.location.href = "/thankyou";
+    }else{
+        console.log(resp);
+        alert('BOOK NOT DETECTED');
+    }
+    
+    return resp;
+  }
+  
+</script>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: #fff;
+}
+
+body{
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Nato Sans KR', sans-serif;
+
+    background-color: #fff;
+}
+
+
+
+#cover{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    height: 1024px;
+    width: 600px;
+    
+    border: 10px solid transparent; /*2*/
+    background: linear-gradient(45deg,#70b988, #70b787) border-box; /*3*/
+}
+
+.center{
+    position: absolute;
+    top: 80%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+}
+
+
+.button{
+    width: 400px;
+    height: 100px;
+
+    border-radius: 50px;
+
+    padding: 20px; 
+    margin: 10px;
+    font-weight: 100; 
+    font-size: 1em;
+    background-color: #fff;
+    color: black;
+}
+
+.button_no{
+    width: 400px;
+    height: 100px;
+
+    border-radius: 50px;
+
+    padding: 20px; 
+    margin: 10px;
+    font-weight: 100; 
+    font-size: 1em;
+    background-color: #f44336;
+    color: white;
+}
+</style>
+</html>

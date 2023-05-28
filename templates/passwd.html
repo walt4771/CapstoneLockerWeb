@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enter Password</title>
+</head>
+<body>
+    <div id="cover">
+    <div class="info">
+        <br>비밀번호를<br>입력해 주세요
+    </div>
+    <div class="center">
+
+    <form class="calculator" name="calc">
+        
+        <div class="value" type="text">
+            <input type="text" class="passwd" id="passwd1" readonly="">
+            <input type="text" class="passwd" id="passwd2" readonly="">
+            <input type="text" class="passwd" id="passwd3" readonly="">
+            <input type="text" class="passwd" id="passwd4" readonly="">
+        </div>
+
+        <span class="num" onclick="numOnClick(1)">1</span>
+        <span class="num" onclick="numOnClick(2)">2</span>
+        <span class="num" onclick="numOnClick(3)">3</span>
+        <span class="num" onclick="numOnClick(4)">4</span>
+        <span class="num" onclick="numOnClick(5)">5</span>
+        <span class="num" onclick="numOnClick(6)">6</span>
+        <span class="num" onclick="numOnClick(7)">7</span>
+        <span class="num" onclick="numOnClick(8)">8</span>
+        <span class="num" onclick="numOnClick(9)">9</span>
+        <span class="num" onclick="numOnClick(0)">0</span>
+
+        <span class="num clear" onclick="numOnClick(10)">←</span>
+    </form>
+    </div>
+    </div>
+</body>
+
+<script>
+    var host = "http://x.x.x.x:8080"; // Require API Server IP and Port
+    var passwd = "";
+    var passwdUI = [
+        document.getElementById('passwd1'),
+        document.getElementById('passwd2'),
+        document.getElementById('passwd3'),
+        document.getElementById('passwd4')
+    ];
+
+    function numOnClick(num){
+        // change 
+        if(num == 10){
+            passwd = passwd.slice(0, -1);
+        }else{
+            passwd += num;
+        }
+
+        //change UI
+        for(var i = 0; i < 4; i++){
+            if( ( i - passwd.length ) >= 0 ){
+                passwdUI[i].value = "";
+            }else{
+                passwdUI[i].value = "*";
+            }
+        }
+
+        //if psswd.len == 4
+        if(passwd.length == 4){
+            if("{{data}}" == "sell"){
+                fetch(host + "/api/locker/sale/password/check/1/" + passwd).then(
+                    (response)=>{
+                        if(response.status == 200){
+                            window.location.href='/register';
+                        }else{
+                            window.location.href='/';
+                        }
+                    }
+                );
+            }else if("{{data}}" == "buy"){
+                fetch(host + "/api/locker/buyer/password/check/1/"+passwd).then(
+                    (response)=>{
+                        if(response.status == 200){
+                            return response.json()                         
+                        }else{
+                            window.location.href='/';
+                        }
+                    }
+                ).then((json)=>{
+                    console.log(json)
+                    console.log(json.data)
+                    console.log(json.data.productId)
+                    const productId = json.data.productId
+                    window.location.href= '/preview/' + productId
+                });
+            }else{
+                window.location.href='/';
+            }
+        }
+    }
+</script>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+    *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: #fff;
+}
+
+body{
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Nato Sans KR', sans-serif;
+
+    background-color: #fff;
+}
+
+.center{
+    position: absolute;
+    top: 65%;
+    left: 45%;
+
+    transform: translate(-40%, -50%);
+
+    width: 400;
+    height: 600;
+}
+
+#cover{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    height: 1024px;
+    width: 600px;
+    
+    border: 10px solid transparent; /*2*/
+    background: linear-gradient(45deg,#70b988, #70b787) border-box; /*3*/
+}
+
+.info{
+    font-weight: 900; 
+    font-size: 5em;
+    padding-left: 20px;
+}
+
+
+
+.passwd{
+    width: 50px;
+    height: 50px;
+    font-size: large;
+    text-align: center;
+
+    margin: 4px;
+
+    color: #fff;
+    background-color: #70b787;
+
+    border-style: none;
+    border-bottom-style: solid;
+}
+
+.calculator{
+    position: relative;
+    display: grid;
+}
+
+.calculator .value{
+    grid-column: span 3;
+    height: 100px;
+    width:300px;
+    text-align: center;
+    border: none;
+    outline: none;
+    padding: 10px;
+    font-size: 18px;
+}
+
+.calculator span{
+    display: grid;
+    width: 80px;
+    height: 80px;
+
+    margin: 10px;
+    place-items: center;
+
+    padding: 20px; 
+    margin: 10px;
+    font-weight: 400; 
+    font-size: 2em;
+    background-color: transparent;
+    color: fff;
+}
+
+
+
+.calculator span:active{
+    color: #000;
+    background: #fff;
+}
+
+.calculator span.clear{
+    grid-column: span 2;
+    width: 170px;
+    background: rgb(252, 45, 45);
+}
+</style>
+</html>

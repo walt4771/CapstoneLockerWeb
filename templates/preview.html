@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main</title><!DOCTYPE html>
+    
+</head>
+<body>
+    <div id="cover">
+      <br><br>
+      <div style="padding-left: 20px; font-weight: 900; font-size: 5em;"><br>제품의 상태를 <br>확인해 주세요</div>
+      <h3 style="padding-left: 20px; font-weight: 100; font-size: 2em">사물함 내부의 불이 켜집니다</h3>
+      <div class="center">
+
+        <div class="button" onclick="order()" style="text-align: center; font-weight: 500; font-size: 1.5em">
+          상태가 좋아요 구매할래요!
+        </div>
+          <br>
+        <div class="button_no" onclick="location.href='/'" style="text-align: center; font-weight: 500; font-size: 1.5em">
+          상태가 마음에 들지 않아요<br> 구매하지 않을래요
+        </div>
+
+      </div>
+    </div> 
+</form>
+</body>
+<script>
+  var host = "http://x.x.x.x:8080"; // Require API Server IP and Port
+  
+  fetch('/sensor_lighton');
+  function order(){
+    fetch('/sensor_lightoff');
+    
+    console.log("{{productId}}")
+    fetch(host + "/api/kakao/ready/"+"{{productId}}").then(
+      (response) =>{
+        console.log(Response)
+        return response.json();  
+      }
+    ).then(
+      (json)=>{
+        console.log(json)
+        console.log(json.data.next_redirect_pc_url)
+        const next_url =json.data.next_redirect_pc_url
+        window.location.href=json.data.next_redirect_pc_url 
+      }
+    )
+  }
+</script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: #fff;
+}
+
+body{
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Nato Sans KR', sans-serif;
+
+    background-color: #fff;
+}
+
+
+
+#cover{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    height: 1024px;
+    width: 600px;
+    
+    border: 10px solid transparent; /*2*/
+    background: linear-gradient(45deg,#70b988, #70b787) border-box; /*3*/
+}
+
+.center{
+    position: absolute;
+    top: 70%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+}
+
+
+.button{
+    width: 400px;
+    height: 100px;
+
+    border-radius: 50px;
+
+    padding: 20px; 
+    margin: 10px;
+    font-weight: 100; 
+    font-size: 1em;
+    background-color: #fff;
+    color: black;
+}
+
+.button_no{
+    width: 400px;
+    height: 100px;
+
+    border-radius: 50px;
+
+    padding: 20px; 
+    margin: 10px;
+    font-weight: 100; 
+    font-size: 1em;
+    background-color: #f44336;
+    color: white;
+}
+</style>
+</html>
